@@ -1,21 +1,46 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const CalculatorApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class CalculatorApp extends StatefulWidget {
+  const CalculatorApp({super.key});
+
+  @override
+  CalculatorAppState createState() => CalculatorAppState();
+}
+
+class CalculatorAppState extends State<CalculatorApp> {
+  String output = "0";
+
+  void buttonPressed(String buttonText) {
+    setState(() {
+      output = buttonText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Calculator',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Calculator"),
         ),
-        home: CalculatorButtons(onButtonPressed: (p0) => {print("Pressed")}));
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              Text(
+                output,
+                style: const TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+              ),
+              CalculatorButtons(onButtonPressed: buttonPressed),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

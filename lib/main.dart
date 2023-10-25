@@ -10,12 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-    );
+        title: 'Flutter Calculator',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: CalculatorButtons(onButtonPressed: (p0) => {print("Pressed")}));
   }
 }
 
@@ -37,6 +37,36 @@ class CalculatorButton extends StatelessWidget {
         textStyle: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
       ),
       child: Text(text),
+    );
+  }
+}
+
+class CalculatorButtons extends StatelessWidget {
+  final Function(String) onButtonPressed;
+
+  CalculatorButtons({super.key, required this.onButtonPressed});
+
+  final List<List<String>> buttonRows = [
+    ["7", "8", "9", "/"],
+    ["4", "5", "6", "*"],
+    ["1", "2", "3", "-"],
+    [".", "0", "C", "+"],
+    ["="],
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: buttonRows.map((row) {
+        return Row(
+          children: row.map((text) {
+            return CalculatorButton(
+              text: text,
+              onPressed: onButtonPressed,
+            );
+          }).toList(),
+        );
+      }).toList(),
     );
   }
 }

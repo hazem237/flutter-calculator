@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'calculator_logic.dart';
 
 void main() {
   runApp(const CalculatorApp());
@@ -13,12 +14,20 @@ class CalculatorApp extends StatefulWidget {
 
 class CalculatorAppState extends State<CalculatorApp> {
   String output = "0";
+  double num1 = 0;
+  double num2 = 0;
+  String operand = "";
 
-  void buttonPressed(String buttonText) {
-    setState(() {
-      output = buttonText;
-    });
-  }
+void buttonPressed(String buttonText) {
+  final result = calculateResult(buttonText, output, num1, num2, operand);
+
+  setState(() {
+    output = result['output'];
+    num1 = result['num1'];
+    num2 = result['num2'];
+    operand = result['operand'];
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +42,8 @@ class CalculatorAppState extends State<CalculatorApp> {
             children: <Widget>[
               Text(
                 output,
-                style: const TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 48.0, fontWeight: FontWeight.bold),
               ),
               CalculatorButtons(onButtonPressed: buttonPressed),
             ],

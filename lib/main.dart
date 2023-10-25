@@ -18,16 +18,16 @@ class CalculatorAppState extends State<CalculatorApp> {
   double num2 = 0;
   String operand = "";
 
-void buttonPressed(String buttonText) {
-  final result = calculateResult(buttonText, output, num1, num2, operand);
+  void buttonPressed(String buttonText) {
+    final result = calculateResult(buttonText, output, num1, num2, operand);
 
-  setState(() {
-    output = result['output'];
-    num1 = result['num1'];
-    num2 = result['num2'];
-    operand = result['operand'];
-  });
-}
+    setState(() {
+      output = result['output'];
+      num1 = result['num1'];
+      num2 = result['num2'];
+      operand = result['operand'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +36,26 @@ void buttonPressed(String buttonText) {
         appBar: AppBar(
           title: const Text("Calculator"),
         ),
-        body: Padding(
+        body: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[800],
+            border: Border.all(
+              color: Colors.black,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          margin: const EdgeInsets.all(16.0),
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
               Text(
                 output,
                 style: const TextStyle(
-                    fontSize: 48.0, fontWeight: FontWeight.bold),
+                  fontSize: 48.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white, // Text color
+                ),
               ),
               CalculatorButtons(onButtonPressed: buttonPressed),
             ],
@@ -63,15 +75,29 @@ class CalculatorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => onPressed(text),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey[300],
-        foregroundColor: Colors.black,
-        padding: const EdgeInsets.all(16.0),
-        textStyle: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[300], // Background color of the button
+        border: Border.all(
+          color: Colors.black,
+          width: 1.0,
+        ),
+        borderRadius:
+            BorderRadius.circular(8.0), // Adjust the button border radius
       ),
-      child: Text(text),
+      child: ElevatedButton(
+        onPressed: () => onPressed(text),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.black,
+          padding: const EdgeInsets.all(16.0),
+          textStyle: const TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        child: Text(text),
+      ),
     );
   }
 }
